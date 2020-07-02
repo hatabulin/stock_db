@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/work/development/AndroidStudio/Projects/stock_db/lib/ui/signin/signInPage.dart';
+
+import '../ui/signin/signInPage.dart';
 
 /// Маршруты для навигации.
 class UIRoutes {
