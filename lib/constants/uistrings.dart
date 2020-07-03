@@ -4,6 +4,8 @@ class UIStrings {
   static const String appName = "Склад";
 
   static const String common_enter = 'Войти';
+  static const String common_next = 'Далее';
+
   static const String common_error = 'Ошибка';
   static const String common_done = 'Готово';
   static const String common_ok = 'OK';

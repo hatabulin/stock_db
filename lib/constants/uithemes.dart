@@ -5,7 +5,7 @@ class UIThemes {
   // Основная тема приложения
   static ThemeData mainTheme = ThemeData(
     fontFamily: "SF Pro Display",
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Color(0xff03FFFFFF)
   );
 
   static const black = Color(0xFF000000);

@@ -1,19 +1,18 @@
 import 'dart:async';
 //import 'package:stockdb/services/authentication.dart';
 
-class SignInBloc {
+class SignInPhoneBloc {
   final _streamController = StreamController<SignInState>();
   Stream<SignInState> get stream => _streamController.stream;
 
   // Авторизация пользователя и получение токена
-  Future<void> login(String user, String password) async {
-    if (!_streamController.isClosed) _streamController.sink.add(SignInState._loading());
-    String userId = "";
+//  Future<void> login(String user, String password) async {
+//    if (!_streamController.isClosed) _streamController.sink.add(SignInState._loading());
+//    String userId = "";
 //    userId = await auth.signIn(user, password);
-    print('Signed in: $userId');
-  }
+//    print('Signed in: $userId');
+//  }
   
-
   void dispose() {
     _streamController.close();
   }
