@@ -17,6 +17,11 @@ class NavigationHelper {
       Navigator.of(context).pushNamedAndRemoveUntil(
         UIRoutes.signInPhone,
             (Route<dynamic> route) => false,
-//        arguments: SetPinCodeArguments(),
+      );
+
+  static void toSignInCode(BuildContext context) =>
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        UIRoutes.signInCode,
+            (Route<dynamic> route) => false,
       );
 }

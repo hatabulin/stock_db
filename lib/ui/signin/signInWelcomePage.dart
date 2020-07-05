@@ -10,6 +10,7 @@ import 'package:stockdb/helpers/navigationHelper.dart';
 import 'package:stockdb/ui/widgets/elements/appStyle.dart';
 import 'package:stockdb/ui/widgets/elements/buttonStyles.dart';
 import 'package:stockdb/ui/widgets/elements/textStyles.dart';
+import 'package:stockdb/ui/widgets/logoWidget.dart';
 
 import '../widgets/elements/activityIndicatorWidget.dart';
 import 'signInPhoneBloc.dart';
@@ -58,11 +59,9 @@ class _SignInWelcomePageState extends State<SignInWelcomePage> {
         child: Column(
           key: _formKey,
           children: <Widget>[
-            SizedBox(height: 200.0),
-            _signUpLogo(),
-            SizedBox(height: 20.0),
-            Text("Учет товаров на складе.", style: TextStyle(color: Colors.white),),
-            SizedBox(height: 200.0),
+            SizedBox(height: 150.0),
+            SignUpLogo(),
+            SizedBox(height: 270.0),
             applicationButton(buttonGradientColorStart, buttonGradientColorEnd,
                 Colors.white, "Войти", () {
                   NavigationHelper.toSignInPhone(context);
@@ -71,34 +70,5 @@ class _SignInWelcomePageState extends State<SignInWelcomePage> {
           ],
         ),
       );
-
-  Widget _signUpLogo() {
-    return InkWell(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child:Image.asset('assets/images/img_stock_logo.png'),
-                height: 44,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: ShadowText("Cклад",
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 44,
-                        fontWeight: FontWeight.bold,
-                        foreground: new Paint()..shader = linearGradient))
-//                        color: Colors.white)),
-              )
-            ],
-          ),
-
-    );
-  }
-
-  final Shader linearGradient = LinearGradient(
-    colors: <Color>[Color(0xffeA441b), Color(0xffffff2a)],
-  ).createShader(new Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
 }

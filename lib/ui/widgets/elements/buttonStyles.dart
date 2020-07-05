@@ -6,7 +6,7 @@ Widget applicationButton(Color colorUp, Color colorDown, Color colorText,
     String text, EmptyCallback callback) {
   return Container(margin: const EdgeInsets.only(left: 61.0, right: 61.0),
     width: double.infinity,
-    height: 44.0,
+    height: 46.0,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10.0),
       gradient: LinearGradient(
@@ -31,7 +31,7 @@ Widget applicationButton(Color colorUp, Color colorDown, Color colorText,
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 16.0,
+          fontSize: 20.0,
           color: colorText,
           fontFamily: 'Bold',
           fontWeight: FontWeight.w600,

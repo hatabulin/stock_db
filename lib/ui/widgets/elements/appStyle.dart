@@ -13,6 +13,10 @@ const Color appTextFieldBackgroundColor = Color(0xff278E86);
 
 const Color textFieldGradientColorStart = Color(0xff0010ff);
 const Color textFieldGradientColorEnd = Color(0xff0060ff);
+
+const Color textCodeFieldGradientColorStart = Color(0xff0070ff);
+const Color textCodeFieldGradientColorEnd = Color(0xff0090ff);
+
 const Color buttonGradientColorStart = Color(0xff000085);
 const Color buttonGradientColorEnd = Color(0xff0000f0);
 const Color backgroundGradientColorStart = Color(0xff0B3138);
