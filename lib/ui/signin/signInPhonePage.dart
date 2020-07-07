@@ -1,27 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:stockdb/constants/uiimages.dart';
-import 'package:stockdb/constants/uistrings.dart';
-import 'package:stockdb/constants/uithemes.dart';
-import 'package:stockdb/dialogs/tappableDialog.dart';
-import 'package:stockdb/helpers/navigationHelper.dart';
 import 'package:stockdb/ui/widgets/elements/appStyle.dart';
 import 'package:stockdb/ui/widgets/elements/buttonStyles.dart';
 import 'package:stockdb/ui/widgets/elements/textStyles.dart';
 import 'package:stockdb/ui/widgets/logoWidget.dart';
-
-import '../widgets/elements/activityIndicatorWidget.dart';
 import 'signInPhoneBloc.dart';
 
 /// Страница авторизации.
 class SignInPhonePage extends StatefulWidget {
   @override
-  _SignInPhonePageState createState() => _SignInPhonePageState();
+  SignInPhonePageState createState() => SignInPhonePageState();
 }
 
-class _SignInPhonePageState extends State<SignInPhonePage> with SingleTickerProviderStateMixin {
+class SignInPhonePageState extends State<SignInPhonePage>
+    with SingleTickerProviderStateMixin {
   GlobalKey _contentKey = GlobalKey();
   GlobalKey _formKey = GlobalKey();
 
@@ -31,28 +24,34 @@ class _SignInPhonePageState extends State<SignInPhonePage> with SingleTickerProv
 
   SignInPhoneBloc _signInPhoneBloc;
   bool _loading = false;
-
   String _phone = "";
+  final _code = List<int>();
 
   @override
   void initState() {
-//    textControllerPhone.text = _phone;
     _signInPhoneBloc = SignInPhoneBloc();
     _signInPhoneBloc.initState();
     super.initState();
-    _controller = AnimationController( vsync: this, duration: Duration(seconds: 2));
+
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
     _tween = Tween<double>(begin: 10.0, end: 180.0);
     _animation = _tween.animate(_controller);
     _animation.addListener(() {
-      setState(() {
-      });
+      setState(() {});
     });
     _controller.forward();
+
+    for (var i = 1; i < 6; i++) {
+      _code.add(0);
+    }
   }
 
   @override
   void dispose() {
-      _signInPhoneBloc.dispose();
+    _signInPhoneBloc.dispose();
+    _controller.dispose();
+
     super.dispose();
   }
 
@@ -72,42 +71,48 @@ class _SignInPhonePageState extends State<SignInPhonePage> with SingleTickerProv
                   alignment: Alignment.topCenter,
                 ),
               ),
-                  StreamBuilder(
-                    stream: _signInPhoneBloc.stream,
-                    initialData: SignInInitState(),
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.data is SignInLoadingState) {
-                        _loading = true;
-                        return _body();
-                      }
-                      else if (snapshot.data is SignInSuccessState) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-//                          NavigationHelper.fromSignInToUsePinCode(context);
-                        });
-                        return _body();
-                      }
-                      else if (snapshot.data is SignInErrorState) {
-                        _loading = false;
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-//                          _showIncorrectCredentials((snapshot.data as SignInErrorState).error);
-                        });
-                        return _body();
-                      }
-                      else {
-                        return _body();
-                      }
-                    },
-                  ),
+              SignUpLogo(),
+              _enterPhoneBloc() //_body()
             ])));
   }
 
-  Widget _body() =>  ScaleTransition(scale: _controller, child: SingleChildScrollView(
-        child:Column(
+  Widget _enterPhoneBloc() {
+    return StreamBuilder(
+      stream: _signInPhoneBloc.stream,
+      initialData: SignInEnterState,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.data is SignInLoadingState) {
+          return _loadingWidget();
+        } else if (snapshot.data is SignInEnterState) {
+          return _bodyEnter();
+        } else if (snapshot.data is SignInPhoneState) {
+          return _bodyPhoneNumber();
+        } else if (snapshot.data is SignInCodeState) {
+          return _bodyEnterCode();
+        } else
+          return _loadingWidget();
+      },
+    );
+  }
+
+  Widget _bodyEnter() => Column(
+//          key: _formKey,
+        children: <Widget>[
+          SizedBox(height: 470.0),
+          applicationButton(buttonGradientColorStart, buttonGradientColorEnd,
+              Colors.white, "Войти", () {
+            _signInPhoneBloc.enterPhone();
+          }),
+          SizedBox(height: 40.0),
+        ],
+      );
+
+  Widget _bodyPhoneNumber() => ScaleTransition(
+        scale: _controller,
+        child: Column(
           key: _formKey,
           children: <Widget>[
-            SizedBox(height: 150.0),
-            SignUpLogo(),
-            SizedBox(height: 210.0),
+            SizedBox(height: 410.0),
             appTextFieldWithoutImage(textFieldGradientColorStart,
                 textFieldGradientColorEnd, "Телефон", false, (String text) {
               _phone = text;
@@ -115,11 +120,78 @@ class _SignInPhonePageState extends State<SignInPhonePage> with SingleTickerProv
             SizedBox(height: 20.0),
             applicationButton(buttonGradientColorStart, buttonGradientColorEnd,
                 Colors.white, "Далее", () {
-                  _signInPhoneBloc.signIn(_phone) ;
-//                  NavigationHelper.toSignInCode(context);
-                }),
+              _signInPhoneBloc.enterCode();
+            }),
             SizedBox(height: 40.0),
           ],
         ),
+      );
+
+  Widget _bodyEnterCode() => SingleChildScrollView(
+          child: Column(
+        key: _formKey,
+        children: <Widget>[
+          SizedBox(height: 300.0),
+          Container(
+            height: 30,
+            margin: const EdgeInsets.only(left: 85.0, right: 85.0),
+            child: Text(
+                "Введите код который мы отправили на указаный вами номер телефона",
+                textAlign: TextAlign.center,
+                style: new TextStyle(
+                  decoration: TextDecoration.none,
+                  color: Colors.white,
+                  decorationColor: Colors.white,
+                  decorationStyle: TextDecorationStyle.solid,
+                )),
+          ),
+          SizedBox(height: 30.0),
+          _codeWidget(),
+          SizedBox(height: 70.0),
+          applicationButton(buttonGradientColorStart, buttonGradientColorEnd,
+              Colors.white, "Войти", () {
+//            _signInPhoneBloc.signIn(_phone);
+          }),
+          SizedBox(height: 40.0)
+        ],
       ));
+
+  Widget _codeWidget() {
+    return Container(
+        margin: const EdgeInsets.only(left: 61.0, right: 61.0),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          appTextCodeField(textCodeFieldGradientColorStart,
+              textCodeFieldGradientColorEnd, "_", false, (String text) {
+            _code[0] = int.parse(text);
+          }),
+          SizedBox(width: 5.0),
+          appTextCodeField(textCodeFieldGradientColorStart,
+              textCodeFieldGradientColorEnd, "_", false, (String text) {
+            _code[1] = int.parse(text);
+          }),
+          SizedBox(width: 5.0),
+          appTextCodeField(textCodeFieldGradientColorStart,
+              textCodeFieldGradientColorEnd, "_", false, (String text) {
+            _code[2] = int.parse(text);
+          }),
+          SizedBox(width: 5.0),
+          appTextCodeField(textCodeFieldGradientColorStart,
+              textCodeFieldGradientColorEnd, "_", false, (String text) {
+            _code[3] = int.parse(text);
+          }),
+          SizedBox(width: 5.0),
+          appTextCodeField(textCodeFieldGradientColorStart,
+              textCodeFieldGradientColorEnd, "_", false, (String text) {
+            _code[4] = int.parse(text);
+          }),
+          SizedBox(width: 5.0),
+          appTextCodeField(textCodeFieldGradientColorStart,
+              textCodeFieldGradientColorEnd, "_", false, (String text) {
+            _code[5] = int.parse(text);
+          }),
+        ]));
+  }
+
+  Widget _loadingWidget() => Center(child: CircularProgressIndicator());
 }

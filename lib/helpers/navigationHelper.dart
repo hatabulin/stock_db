@@ -12,16 +12,4 @@ class NavigationHelper {
         UIRoutes.signIn,
             (Route<dynamic> route) => false,
       );
-
-  static void toSignInPhone(BuildContext context) =>
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        UIRoutes.signInPhone,
-            (Route<dynamic> route) => false,
-      );
-
-  static void toSignInCode(BuildContext context) =>
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        UIRoutes.signInCode,
-            (Route<dynamic> route) => false,
-      );
 }

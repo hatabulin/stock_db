@@ -16,10 +16,10 @@ class SignInPhoneBloc {
 
   Future<void> initState() async {
 
+//    if (!_streamController.isClosed)
+//      _streamController.sink.add(SignInState._loading());
     if (!_streamController.isClosed)
-      _streamController.sink.add(SignInState._loading());
-    if (!_streamController.isClosed)
-      _streamController.sink.add(SignInState._success());
+      _streamController.sink.add(SignInState._enter());
 //    if (!_streamController.isClosed)
 //      _streamController.sink.add(RoutesState._loading());
   }
@@ -56,6 +56,14 @@ class SignInPhoneBloc {
       print("verificationFailedListener. Something has gone wrong, please try later");
     }
   };
+
+  Future<void> enterPhone() async {
+    _streamController.sink.add(SignInState._phone());
+  }
+
+  Future<void> enterCode() async {
+    _streamController.sink.add(SignInState._code());
+  }
 
   Future<void> signIn(String phone) async {
     if (!_streamController.isClosed)
@@ -95,6 +103,12 @@ class SignInState {
 
   factory SignInState._loading() = SignInLoadingState;
 
+  factory SignInState._enter() = SignInEnterState;
+
+  factory SignInState._phone() = SignInPhoneState;
+
+  factory SignInState._code() = SignInCodeState;
+
   factory SignInState._success() = SignInSuccessState;
 
   factory SignInState._error(String error) = SignInErrorState;
@@ -103,6 +117,12 @@ class SignInState {
 class SignInInitState extends SignInState {}
 
 class SignInLoadingState extends SignInState {}
+
+class SignInEnterState extends SignInState {}
+
+class SignInPhoneState extends SignInState {}
+
+class SignInCodeState extends SignInState {}
 
 class SignInSuccessState extends SignInState {}
 

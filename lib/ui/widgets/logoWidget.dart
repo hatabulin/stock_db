@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'elements/textStyles.dart';
 
 Widget SignUpLogo() {
-  return InkWell(
-      child: Column(children: <Widget>[
+  return Column(children: <Widget>[
+    SizedBox(height: 150.0),
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -29,7 +29,7 @@ Widget SignUpLogo() {
       "Учет товаров на складе.",
       style: TextStyle(color: Colors.white),
     ),
-  ]));
+  ]);
 }
 
 final Shader linearGradient = LinearGradient(
