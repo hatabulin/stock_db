@@ -9,7 +9,7 @@ Widget SignUpLogo() {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          child: Image.asset('assets/images/img_stock_logo.png'),
+          child: Image.asset('assets/img/img_stock_logo.png'),
           height: 44,
         ),
         Padding(

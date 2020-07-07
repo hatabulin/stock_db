@@ -1,19 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:stockdb/constants/uiimages.dart';
-import 'package:stockdb/constants/uistrings.dart';
-import 'package:stockdb/constants/uithemes.dart';
-import 'package:stockdb/dialogs/tappableDialog.dart';
 import 'package:stockdb/helpers/navigationHelper.dart';
 import 'package:stockdb/ui/widgets/elements/appStyle.dart';
 import 'package:stockdb/ui/widgets/elements/buttonStyles.dart';
-import 'package:stockdb/ui/widgets/elements/textStyles.dart';
 import 'package:stockdb/ui/widgets/logoWidget.dart';
-
-import '../widgets/elements/activityIndicatorWidget.dart';
-import 'signInPhoneBloc.dart';
 
 /// Страница авторизации.
 class SignInWelcomePage extends StatefulWidget {

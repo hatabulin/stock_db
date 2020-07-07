@@ -49,7 +49,7 @@ flutter:
         - asset: assets/fonts/Montserrat-Black.ttf
 
   assets:
-    - assets/images/
+    - assets/img/
     -
   uses-material-design: true
 
