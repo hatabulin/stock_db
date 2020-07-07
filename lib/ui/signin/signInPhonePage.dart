@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stockdb/constants/uiimages.dart';
+import 'package:stockdb/helpers/navigationHelper.dart';
 import 'package:stockdb/ui/widgets/elements/appStyle.dart';
 import 'package:stockdb/ui/widgets/elements/buttonStyles.dart';
 import 'package:stockdb/ui/widgets/elements/textStyles.dart';
@@ -34,13 +35,13 @@ class SignInPhonePageState extends State<SignInPhonePage>
     super.initState();
 
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
     _tween = Tween<double>(begin: 10.0, end: 180.0);
     _animation = _tween.animate(_controller);
     _animation.addListener(() {
       setState(() {});
     });
-    _controller.forward();
+//    _controller.forward();
 
     for (var i = 1; i < 6; i++) {
       _code.add(0);
@@ -64,16 +65,30 @@ class SignInPhonePageState extends State<SignInPhonePage>
                 fit: StackFit.expand,
                 key: _contentKey,
                 children: <Widget>[
-              Positioned.fill(
-                child: Image.asset(
-                  UIImages.login_background,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                ),
-              ),
-              SignUpLogo(),
-              _enterPhoneBloc() //_body()
-            ])));
+                  Positioned.fill(
+                    child: Image.asset(
+                      UIImages.login_background,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
+                  ),
+                  SignUpLogo(),
+//                  _rrr(),
+                  _enterPhoneBloc() //_body()
+                ])));
+  }
+
+
+  Widget _rrr() {
+    return Container(
+      child: ConstrainedBox(
+        constraints: BoxConstraints.tight(Size.fromHeight(200)),
+//        child: getViewAsPerState(state),
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(62))),
+    );
   }
 
   Widget _enterPhoneBloc() {
@@ -86,6 +101,7 @@ class SignInPhonePageState extends State<SignInPhonePage>
         } else if (snapshot.data is SignInEnterState) {
           return _bodyEnter();
         } else if (snapshot.data is SignInPhoneState) {
+          _controller.forward();
           return _bodyPhoneNumber();
         } else if (snapshot.data is SignInCodeState) {
           return _bodyEnterCode();
@@ -107,7 +123,7 @@ class SignInPhonePageState extends State<SignInPhonePage>
         ],
       );
 
-  Widget _bodyPhoneNumber() => ScaleTransition(
+  Widget _bodyPhoneNumber() => SingleChildScrollView( child:ScaleTransition(
         scale: _controller,
         child: Column(
           key: _formKey,
@@ -125,7 +141,7 @@ class SignInPhonePageState extends State<SignInPhonePage>
             SizedBox(height: 40.0),
           ],
         ),
-      );
+  ));
 
   Widget _bodyEnterCode() => SingleChildScrollView(
           child: Column(
@@ -150,7 +166,7 @@ class SignInPhonePageState extends State<SignInPhonePage>
           SizedBox(height: 70.0),
           applicationButton(buttonGradientColorStart, buttonGradientColorEnd,
               Colors.white, "Войти", () {
-//            _signInPhoneBloc.signIn(_phone);
+                NavigationHelper.homePage(context);
           }),
           SizedBox(height: 40.0)
         ],

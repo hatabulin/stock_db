@@ -12,4 +12,10 @@ class NavigationHelper {
         UIRoutes.signIn,
             (Route<dynamic> route) => false,
       );
+
+  static void homePage(BuildContext context) =>
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        UIRoutes.homePage,
+            (Route<dynamic> route) => false,
+      );
 }
