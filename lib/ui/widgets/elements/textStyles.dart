@@ -113,3 +113,40 @@ Widget appTextCodeField(
     ),
   );
 }
+
+Widget appTextField(
+    String hint, bool hideText, TextCallback callback) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.yellow.withOpacity(0.2),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: Offset(0, 3), // changes position of shadow
+        ),
+      ],
+    ),
+    height: 20.0,
+    width: 40.0,
+    child: TextFormField(
+      maxLength: 20,
+//      keyboardType: TextInputType.,
+      cursorColor: primaryColor,
+//      obscureText: hideText,
+      autofocus: true,
+      style: new TextStyle(color: appNormalTextColor, fontSize: 14),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.fromLTRB(5.0, 2.0, 2.0, 8.0),
+        hintText: hint,
+        counterText: "",
+        hintStyle: TextStyle(color: appTextHintColor),
+      ),
+      onChanged: (text) {
+        callback(text);
+      },
+    ),
+  );
+}

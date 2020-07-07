@@ -24,4 +24,8 @@ class UIStrings {
   static const String sign_in_recover_login = 'Восстановить логин и пароль';
   static const String sign_in_need_accept = 'Телефон/email должен быть подтвержден в личном кабинете';
 
+  static const String product_name = 'Наименование';
+  static const String quantity = 'Кол-во';
+  static const String price = 'Цена ед.';
+  static const String price_total = 'Общ.сумма';
 }
