@@ -27,7 +27,6 @@ class SignInPhoneBloc {
   void dispose() {
     _streamController.close();
   }
-
   //
   // Listeners
   //
