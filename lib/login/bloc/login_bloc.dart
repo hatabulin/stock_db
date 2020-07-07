@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-//import 'package:ebizcard/data/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stockdb/data/user_repository.dart';
 
 import 'login_state.dart';
 import 'login_event.dart';
-//import './bloc.dart';
+
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository _userRepository;
@@ -24,10 +23,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(
-    LoginEvent event,
-  ) async* {
+      LoginEvent event,
+      ) async* {
     if (event is SendOtpEvent) {
       yield LoadingState();
+
       subscription = sendOtp(event.phoNo).listen((event) {
         add(event);
       });
@@ -41,7 +41,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoadingState();
       try {
         AuthResult result =
-            await _userRepository.verifyAndLogin(verID, event.otp);
+        await _userRepository.verifyAndLogin(verID, event.otp);
         if (result.user != null) {
           yield LoginCompleteState(result.user);
         } else {
