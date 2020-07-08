@@ -36,19 +36,15 @@ class _HomePageState extends State<HomePage> {
         drawer: new Drawer(
             child: new ListView(
           children: <Widget>[
-            new DrawerHeader(
+            DrawerHeader(
               child: new Text('Меню'),
             ),
-            new ListTile(
+            ListTile(
               title: new Text('Товары'),
               onTap: () {},
             ),
-            new ListTile(
-              title: new Text('Поставщики'),
-              onTap: () {},
-            ),
-            new Divider(),
-            new ListTile(
+            Divider(),
+            ListTile(
               title: new Text('О программе'),
               onTap: () {},
             ),
@@ -59,18 +55,18 @@ class _HomePageState extends State<HomePage> {
 
   Widget _productsListWidget() {
     return Container(
-    padding: EdgeInsets.only(left: 10, right: 10),
-      child:Column(children: <Widget>[
-      SizedBox(
-        height: 20,
-      ),
-      _filterWidget(),
-      _productCategoryWidget(),
-      SizedBox(
-        height: 50,
-      ),
-      _tableBar(),
-    ]));
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Column(children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          _filterWidget(),
+          _productCategoryWidget(),
+          SizedBox(
+            height: 50,
+          ),
+          _tableBar(),
+        ]));
   }
 
   Widget _filterWidget() {
@@ -98,7 +94,10 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.only(left: 20),
           width: 200,
           child: DropdownButton(
-            style: TextStyle(fontSize: 14, color: appNormalTextColor,),
+            style: TextStyle(
+              fontSize: 14,
+              color: appNormalTextColor,
+            ),
             isExpanded: true,
             value: _currentValue,
             items: _dropDownMenuItems,

@@ -2,17 +2,25 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:stockdb/data/user_repository.dart';
 
 class SignInPhoneBloc {
 
   static  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final _streamController = StreamController<SignInState>();
+
+  SignInPhoneBloc({@required UserRepository userRepository})
+      : assert(userRepository != null),
+        _userRepository = userRepository;
+
   Stream<SignInState> get stream => _streamController.stream;
 
   static String _status;
 //  AuthCredential _phoneAuthCredential;
   static String _verificationId = "";
   static String  _code;
+
+  final UserRepository _userRepository;
 
   Future<void> initState() async {
 
@@ -61,8 +69,35 @@ class SignInPhoneBloc {
     _streamController.sink.add(SignInState._phone());
   }
 
-  Future<void> enterCode() async {
-    _streamController.sink.add(SignInState._code());
+  Future<void> enterCode(String phoNo) async {
+
+    final PhoneVerificationCompleted = (AuthCredential authCredential) {
+      _userRepository.getUser();
+
+      _streamController.sink.add(SignInState._code());
+
+      _userRepository.getUser().catchError((onError) {
+        print(onError);
+      }).then((user) {
+      });
+    };
+    final PhoneVerificationFailed = (AuthException authException) {
+      print(authException.message);
+    };
+    final PhoneCodeSent = (String verId, [int forceResent]) {
+      this.verID = verId;
+    };
+    final PhoneCodeAutoRetrievalTimeout = (String verid) {
+      this.verID = verid;
+    };
+
+    await _userRepository.sendOtp(
+        phoNo,
+        Duration(seconds: 1),
+        PhoneVerificationFailed,
+        PhoneVerificationCompleted,
+        PhoneCodeSent,
+        PhoneCodeAutoRetrievalTimeout);
   }
 
   Future<void> signIn(String phone) async {

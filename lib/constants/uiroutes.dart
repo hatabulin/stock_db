@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stockdb/ui/home/home_page.dart';
+import 'package:stockdb/ui/home/homePage.dart';
 import 'package:stockdb/ui/signin/signInPhonePage.dart';
 
 /// Маршруты для навигации.

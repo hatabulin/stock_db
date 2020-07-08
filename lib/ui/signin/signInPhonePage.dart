@@ -65,19 +65,18 @@ class SignInPhonePageState extends State<SignInPhonePage>
                 fit: StackFit.expand,
                 key: _contentKey,
                 children: <Widget>[
-                  Positioned.fill(
-                    child: Image.asset(
-                      UIImages.login_background,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                    ),
-                  ),
-                  SignUpLogo(),
+              Positioned.fill(
+                child: Image.asset(
+                  UIImages.login_background,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
+              ),
+              SignUpLogo(),
 //                  _rrr(),
-                  _enterPhoneBloc() //_body()
-                ])));
+              _enterPhoneBloc() //_body()
+            ])));
   }
-
 
   Widget _rrr() {
     return Container(
@@ -123,7 +122,8 @@ class SignInPhonePageState extends State<SignInPhonePage>
         ],
       );
 
-  Widget _bodyPhoneNumber() => SingleChildScrollView( child:ScaleTransition(
+  Widget _bodyPhoneNumber() => SingleChildScrollView(
+          child: ScaleTransition(
         scale: _controller,
         child: Column(
           key: _formKey,
@@ -141,7 +141,7 @@ class SignInPhonePageState extends State<SignInPhonePage>
             SizedBox(height: 40.0),
           ],
         ),
-  ));
+      ));
 
   Widget _bodyEnterCode() => SingleChildScrollView(
           child: Column(
@@ -166,7 +166,7 @@ class SignInPhonePageState extends State<SignInPhonePage>
           SizedBox(height: 70.0),
           applicationButton(buttonGradientColorStart, buttonGradientColorEnd,
               Colors.white, "Войти", () {
-                NavigationHelper.homePage(context);
+            NavigationHelper.homePage(context);
           }),
           SizedBox(height: 40.0)
         ],
